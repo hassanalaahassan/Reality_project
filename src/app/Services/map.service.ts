@@ -18,9 +18,11 @@ export class MapService {
   async initLeaflet(): Promise<any> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this.L) {
-        // Dynamically import leaflet to avoid SSR issues
-        this.L = await import('leaflet');
-        // Fix leaflet default icon issue
+        // Use global L injected via CDN in index.html to avoid SSR/Vercel chunking issues
+        this.L = (window as any).L;
+        
+        if (this.L) {
+          // Fix leaflet default icon issue
         const iconRetinaUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png';
         const iconUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png';
         const shadowUrl = 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png';
@@ -37,6 +39,7 @@ export class MapService {
         });
         
         this.L.Marker.prototype.options.icon = iconDefault;
+        }
       }
       return this.L;
     }

@@ -21,6 +21,7 @@ export class MapDisplayComponent implements OnInit, OnDestroy, OnChanges {
   private map: any;
   private marker: any;
   private L: any;
+  private resizeObserver: any;
 
   constructor(
     private mapService: MapService,
@@ -43,6 +44,9 @@ export class MapDisplayComponent implements OnInit, OnDestroy, OnChanges {
     if (this.map) {
       this.map.remove();
     }
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
   }
 
   private async initMap() {
@@ -59,6 +63,15 @@ export class MapDisplayComponent implements OnInit, OnDestroy, OnChanges {
     }).addTo(this.map);
 
     this.marker = this.L.marker([this.latitude, this.longitude]).addTo(this.map);
+
+    if (typeof window !== 'undefined' && 'ResizeObserver' in window) {
+      this.resizeObserver = new (window as any).ResizeObserver(() => {
+        if (this.map) {
+          this.map.invalidateSize();
+        }
+      });
+      this.resizeObserver.observe(this.mapElement.nativeElement);
+    }
   }
 
   private updateMapPosition() {
