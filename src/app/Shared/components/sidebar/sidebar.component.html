@@ -49,7 +49,7 @@
           isCollapsed ? 'max-w-0 opacity-0' : 'max-w-[180px] opacity-100'
         "
       >
-        <h2 class="text-lg font-bold text-realty-blue-800">RealtyApp</h2>
+        <h2 class="text-lg font-bold text-realty-blue-800">Reality</h2>
         <p class="text-[10px] text-realty-gray-500">Real Estate Solutions</p>
       </div>
     </div>
@@ -94,36 +94,7 @@
     </ng-container>
   </nav>
 
-  <!-- VIP Section (CSS transition instead of *ngIf) -->
-  <div
-    class="mx-3 p-3 rounded-lg bg-gradient-to-r from-realty-sage-50 to-realty-cream-50 border border-realty-sage-200 flex-shrink-0 transition-all duration-300 ease-in-out overflow-hidden"
-    [ngClass]="
-      isCollapsed
-        ? 'max-h-0 opacity-0 m-0 p-0 border-0'
-        : 'max-h-40 opacity-100 mt-4'
-    "
-  >
-    <div class="flex items-center gap-2 mb-2">
-      <div
-        class="flex h-8 w-8 items-center justify-center rounded-full bg-realty-sage-500 flex-shrink-0"
-      >
-        <span class="text-white text-xs">⭐</span>
-      </div>
-      <div>
-        <h3 class="font-semibold text-sm text-realty-sage-800 leading-tight">
-          VIP offers
-        </h3>
-        <p class="text-[10px] text-realty-gray-600 leading-tight mt-0.5">
-          Exclusive discounts
-        </p>
-      </div>
-    </div>
-    <button
-      class="ripple-btn w-full bg-realty-sage-500 hover:bg-realty-sage-600 text-white text-[11px] font-medium py-1.5 rounded transition whitespace-nowrap"
-    >
-      show offers
-    </button>
-  </div>
+
 
   <!-- Logout & User Profile -->
   <div class="mt-auto border-t border-realty-gray-200 pt-2 pb-3 flex-shrink-0">
@@ -131,7 +102,7 @@
     <div class="px-3 mb-1">
       <button
         (click)="logout()"
-        class="ripple-btn w-full flex items-center p-2 rounded-lg text-realty-terracotta-500 hover:bg-realty-terracotta-50 transition-all duration-300 cursor-pointer"
+        class="w-full flex items-center p-2 rounded-lg font-heading text-realty-terracotta-500 hover:bg-realty-terracotta-50 transition-all duration-300 cursor-pointer"
         [title]="isCollapsed ? 'Log out' : ''"
       >
         <span class="text-xl flex-shrink-0">🚪</span>

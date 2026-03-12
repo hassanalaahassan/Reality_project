@@ -12,13 +12,13 @@ import { RouterModule } from '@angular/router';
       style="background-image: url('about/bg-hero.jpg')"
     >
       <div
-        class="absolute inset-0 bg-realty-blue-500/80 mix-blend-multiply"
+        class="absolute inset-0 bg-realty-sage-200/80 mix-blend-multiply"
       ></div>
       <div
         class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white"
       >
         <h1
-          class="text-4xl md:text-6xl font-extrabold mb-6 animate-fade-in text-realty-cream-500"
+          class="text-4xl md:text-6xl font-extrabold mb-6 animate-fade-in text-realty-blue-500"
         >
           We are Reality
         </h1>

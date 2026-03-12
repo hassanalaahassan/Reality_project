@@ -3,6 +3,8 @@ export interface Property {
   title: string;
   price: number | null;
   location: string;
+  latitude?: number | null;
+  longitude?: number | null;
   area: string;
   status: string;
   isVip: boolean | null;
@@ -21,6 +23,8 @@ export interface PropertyForm {
   price: number | null;
   area: string;
   location: string;
+  latitude: number | null;
+  longitude: number | null;
   status: string;
   isVip: boolean;
   isNegotiable: boolean;

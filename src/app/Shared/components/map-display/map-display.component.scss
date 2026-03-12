@@ -1,0 +1,7 @@
+.map-container {
+  /* Ensure Leaflet controls don't overlap with site headers by reducing z-index */
+  ::ng-deep .leaflet-top,
+  ::ng-deep .leaflet-bottom {
+    z-index: 400 !important;
+  }
+}

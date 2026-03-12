@@ -38,6 +38,34 @@
   animation: pageIn 0.5s ease-out;
 }
 
+@keyframes fadeInScale {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeInOverlay 0.25s ease-out forwards;
+}
+
 /* ─── Skeleton ────────────────────────────────────────── */
 
 .skeleton-bar {
@@ -111,8 +139,6 @@
 /* ─── Gallery ─────────────────────────────────────────── */
 
 .gallery-section {
-  position: sticky;
-  top: 2rem;
   display: flex;
   flex-direction: column;
 }

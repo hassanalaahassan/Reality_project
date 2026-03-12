@@ -63,6 +63,67 @@
   --realty-cream-700: #B9B5AD;
   --realty-cream-800: #94918B;
   --realty-cream-900: #7A7772;
+
+  /* Typography Variables */
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base Styles & Typography */
+.font-body {
+  font-family: var(--font-body) !important;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-realty-gray-800);
+  background-color: var(--color-realty-cream-50);
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-realty-blue-900);
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(1.5rem, 5vw, 2.25rem); font-weight: 800; }
+h2 { font-size: clamp(1.25rem, 4vw, 1.75rem); }
+h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); }
+h4 { font-size: clamp(1rem, 2vw, 1.25rem); }
+
+/* Global Common UI */
+.btn {
+  @apply inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-offset-2;
+  font-family: var(--font-heading);
+  padding: clamp(0.4rem, 1.5vw, 0.625rem) clamp(0.75rem, 3vw, 1.25rem);
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+}
+.btn-primary {
+  @apply bg-realty-terracotta-500 text-white hover:bg-realty-terracotta-600 focus:ring-realty-terracotta-300;
+  box-shadow: 0 4px 15px -3px rgba(196, 92, 75, 0.3);
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+.btn-outline {
+  @apply border-2 border-realty-blue-800 text-realty-blue-800 hover:bg-realty-blue-800 hover:text-white focus:ring-realty-blue-300;
 }
 
 /* إضافة جميع الدرجات لـ Tailwind */

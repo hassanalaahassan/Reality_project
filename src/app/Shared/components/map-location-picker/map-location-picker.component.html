@@ -1,0 +1,27 @@
+<div class="map-location-wrapper w-full flex flex-col gap-3">
+  <!-- Search Bar -->
+  <div class="search-bar flex gap-2 w-full mb-1">
+    <div class="relative flex flex-col flex-1">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none w-full">
+      </div>
+      <input 
+        type="text" 
+        class="form-control pl-10 w-full" 
+        placeholder="Search for a city, street, or area..." 
+        (keydown.enter)="searchLocation(searchInput.value); $event.preventDefault()"
+        #searchInput
+      />
+    </div>
+    <button 
+      type="button" 
+      class="btn btn-primary bg-realty-blue-600 hover:bg-realty-blue-700 text-white px-5 py-2 rounded-xl transition-colors font-medium whitespace-nowrap flex-shrink-0"
+      (click)="searchLocation(searchInput.value)"
+    >
+      Search
+    </button>
+  </div>
+
+  <div class="map-container rounded-xl overflow-hidden shadow-sm border border-realty-blue-200 dark:border-realty-blue-700 w-full z-0 relative">
+    <div #mapElement [style.height]="height" class="w-full"></div>
+  </div>
+</div>

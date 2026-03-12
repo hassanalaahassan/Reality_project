@@ -8,6 +8,7 @@ import { AuthService } from '../../../Services/auth.service';
 import { ToastService } from '../../../Services/toast.service';
 import { PropertyForm } from '../../../Models/property';
 import { AuthValidator } from '../../../Services/validation.service';
+import { MapLocationPickerComponent } from '../../../Shared';
 
 interface FeatureRow {
   id: number;
@@ -17,7 +18,7 @@ interface FeatureRow {
 @Component({
   selector: 'app-add-property',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MapLocationPickerComponent],
   templateUrl: './add-property.component.html',
   styleUrls: ['./add-property.component.scss'],
 })
@@ -33,6 +34,8 @@ export class AddPropertyComponent {
     price: null,
     area: '',
     location: '',
+    latitude: null,
+    longitude: null,
     status: '',
     type: '',
     isVip: false,
@@ -76,6 +79,12 @@ export class AddPropertyComponent {
   updateField(field: keyof PropertyForm, value: any) {
     this.form.update((f) => ({ ...f, [field]: value }));
     this.touched.update((t) => ({ ...t, [field]: true }));
+    this.runValidation();
+  }
+
+  onLocationSelected(event: import('../../../Services/map.service').LocationResult) {
+    this.form.update((f) => ({ ...f, location: event.address, latitude: event.lat, longitude: event.lng }));
+    this.touched.update((t) => ({ ...t, location: true }));
     this.runValidation();
   }
 

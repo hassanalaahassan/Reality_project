@@ -1,27 +1,40 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, inject, OnInit, signal, HostListener, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Property } from '../../../Models/property';
 import { PropertiesService } from '../../../Services/properties.service';
+import {
+  ImageGalleryComponent,
+  PropertyInfoComponent,
+  PropertyMapBoxComponent,
+} from '../../../Shared';
 
 @Component({
   selector: 'app-property-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ImageGalleryComponent,
+    PropertyInfoComponent,
+    PropertyMapBoxComponent,
+  ],
   templateUrl: './property-detail.component.html',
   styleUrl: './property-detail.component.scss',
 })
 export class PropertyDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private propertiesService = inject(PropertiesService);
+  private platformId = inject(PLATFORM_ID);
 
   property = signal<Property | undefined>(undefined);
   isLoading = signal<boolean>(true);
   notFound = signal<boolean>(false);
-  selectedImageIndex = signal<number>(0);
+
+  mapHeight = signal<string>('220px');
 
   isFavorite = computed(() => {
-   return this.propertiesService.favoriteIds().has(this.property()?.id+'');
+    return this.propertiesService.favoriteIds().has(this.property()?.id + '');
   });
 
   ngOnInit() {
@@ -30,27 +43,31 @@ export class PropertyDetailComponent implements OnInit {
       this.notFound.set(true);
       this.isLoading.set(false);
       return;
-    }
-    else{
+    } else {
       this.isLoading.set(false);
-      this.property.set(this.propertiesService.getPropertyFromMap(id))      
+      this.property.set(this.propertiesService.getPropertyFromMap(id));
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
     }
   }
 
-  selectImage(index: number) {
-    this.selectedImageIndex.set(index);
+  @HostListener('window:resize')
+  onResize() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkScreenSize();
+    }
   }
 
-  get currentImage(): string {
-    const prop = this.property();
-    if (!prop?.image_urls?.length) return 'assets/images/default-property.jpg';
-    return prop.image_urls[this.selectedImageIndex()] || prop.image_urls[0];
+  private checkScreenSize() {
+    this.mapHeight.set(window.innerWidth <= 768 ? '180px' : '220px');
   }
 
   toggleFavorite() {
     const prop = this.property();
     if (!prop) return;
-    this.propertiesService.toggleFavProperty(this.property()?.id+'').subscribe();
+    this.propertiesService.toggleFavProperty(this.property()?.id + '').subscribe();
   }
 
   getStatusLabel(status: string | undefined): string | undefined {

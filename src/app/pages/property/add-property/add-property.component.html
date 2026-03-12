@@ -44,6 +44,7 @@
               type="text"
               id="title"
               class="form-control"
+              placeholder="e.g. Modern 3BR Apartment in Zamalek"
               [value]="form().title"
               (input)="updateField('title', $any($event.target).value)"
             />
@@ -63,6 +64,7 @@
               id="price"
               class="form-control"
               inputmode="numeric"
+              placeholder="e.g. 1500000"
               [value]="form().price ?? ''"
               (input)="updateField('price', +$any($event.target).value || null)"
             />
@@ -120,16 +122,16 @@
             </p>
           </div>
 
-          <!-- Location -->
-          <div class="col-span-6 md:col-span-3 flex flex-col">
-            <label for="location" class="form-label">Location</label>
-            <input
-              type="text"
-              id="location"
-              class="form-control"
-              [value]="form().location"
-              (input)="updateField('location', $any($event.target).value)"
-            />
+          <!-- Location Map Picker -->
+          <div class="col-span-6 flex flex-col mt-2">
+            <label class="form-label">Location (Search or Pin on Map)</label>
+            <app-map-location-picker
+              (locationSelected)="onLocationSelected($event)"
+              [height]="'350px'"
+            ></app-map-location-picker>
+            <p class="text-gray-500 text-base mt-2" *ngIf="form().location">
+              Selected Address: <strong>{{ form().location }}</strong>
+            </p>
             <p
               class="text-realty-terracotta-500 text-sm mt-1"
               *ngIf="errors().location"
@@ -145,6 +147,7 @@
               type="text"
               id="area"
               class="form-control"
+              placeholder="e.g. 150"
               [value]="form().area"
               (input)="updateField('area', $any($event.target).value)"
             />
@@ -164,6 +167,7 @@
               id="floor"
               class="form-control"
               inputmode="numeric"
+              placeholder="e.g. 5"
               [value]="form().floor ?? ''"
               (input)="updateField('floor', +$any($event.target).value || 0)"
             />
@@ -183,6 +187,7 @@
               id="beds"
               class="form-control"
               inputmode="numeric"
+              placeholder="e.g. 3"
               [value]="form().beds ?? ''"
               (input)="updateField('beds', +$any($event.target).value || 0)"
             />
@@ -202,6 +207,7 @@
               id="bathroom"
               class="form-control"
               inputmode="numeric"
+              placeholder="e.g. 2"
               [value]="form().bathroom ?? ''"
               (input)="updateField('bathroom', +$any($event.target).value || 0)"
             />
@@ -219,6 +225,7 @@
             <textarea
               id="description"
               class="form-control min-h-[120px] resize-y"
+              placeholder="Describe the property — location highlights, condition, amenities..."
               [value]="form().description"
               (input)="updateField('description', $any($event.target).value)"
             ></textarea>
@@ -311,6 +318,7 @@
               type="text"
               id="ownerName"
               class="form-control"
+              placeholder="e.g. Ahmed Hassan"
               [value]="form().ownerName"
               (input)="updateField('ownerName', $any($event.target).value)"
             />
@@ -329,6 +337,7 @@
               type="text"
               id="ownerPhone"
               class="form-control"
+              placeholder="e.g. 01012345678"
               [value]="form().ownerPhone"
               (input)="updateField('ownerPhone', $any($event.target).value)"
             />

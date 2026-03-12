@@ -1,12 +1,43 @@
-.properties-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 16px;
-  align-items: stretch;
+/* ═══════════════════════════════════════════════════════
+   Properties Page — Header + Grid
+   ═══════════════════════════════════════════════════════ */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allows wrapping if it gets too tight */
+  gap: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--realty-blue-900, #0a1330);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.empty-state {
+  padding: 2rem 0;
 }
 
 @media (max-width: 640px) {
-  .properties-container {
-    grid-template-columns: 1fr;
+  .page-header {
+    flex-direction: row; /* Keep them side by side on mobile */
+    align-items: center;
+  }
+
+  .page-title {
+    font-size: 1.35rem; /* Slightly smaller to fit nicely side by side */
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    flex-direction: column; /* Only stack if really small screen like 320px */
+    align-items: flex-start;
   }
 }

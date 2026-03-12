@@ -1,0 +1,113 @@
+<!-- Main Image -->
+<div class="main-image-wrapper cursor-pointer" (click)="openImageDialog()">
+  @for (key of [imageAnimationKey()]; track key) {
+    <img
+      [src]="currentImage"
+      [alt]="title"
+      class="main-image image-transition fade-in-scale"
+    />
+  }
+  <!-- Overlay badges -->
+  <div class="image-badges">
+    @if (isVip) {
+      <span class="badge vip-badge">⭐ VIP</span>
+    }
+    @if (statusLabel) {
+      <span class="badge" [class]="statusColor">
+        {{ statusLabel }}
+      </span>
+    }
+  </div>
+
+  <!-- Favorite button -->
+  <button
+    class="fav-btn"
+    [class.active]="isFavorite"
+    (click)="onToggleFavorite(); $event.stopPropagation()"
+  >
+    <svg
+      [class]="isFavorite ? 'fill-current' : ''"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+      />
+    </svg>
+  </button>
+</div>
+
+<!-- Thumbnails -->
+@if (images && images.length > 0) {
+  <div class="thumbnails-row">
+    @for (img of images; track $index) {
+      <button
+        class="thumbnail"
+        [class.active]="selectedImageIndex() === $index"
+        (click)="selectImage($index)"
+      >
+        <img [src]="img" [alt]="'Image ' + ($index + 1)" />
+      </button>
+    }
+  </div>
+}
+
+<!-- Fullscreen Image Dialog Overlay -->
+@if (isImageDialogOpen()) {
+  <div class="fixed inset-0 w-screen h-screen z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fade-in" 
+       (click)="closeImageDialog()"
+       (touchstart)="onTouchStart($event)"
+       (touchend)="onTouchEnd($event)">
+    
+    <!-- Close Button -->
+    <button 
+      class="absolute top-6 right-6 text-white/70 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors z-[10000]"
+      (click)="closeImageDialog(); $event.stopPropagation()"
+    >
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-8 h-8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Prev Button -->
+    @if (selectedImageIndex() > 0) {
+      <button 
+        class="absolute left-2 md:left-10 text-white p-3 rounded-full bg-black/20 hover:bg-white/20 transition-all z-[10000] transform hover:scale-110"
+        (click)="prevImage($event)"
+      >
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-8 h-8 md:w-10 md:h-10">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+    }
+
+    <!-- Next Button -->
+    @if (images && selectedImageIndex() < images.length - 1) {
+      <button 
+        class="absolute right-2 md:right-10 text-white p-3 rounded-full bg-black/20 hover:bg-white/20 transition-all z-[10000] transform hover:scale-110"
+        (click)="nextImage($event)"
+      >
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="w-8 h-8 md:w-10 md:h-10">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    }
+
+    <!-- Dialog Main Image -->
+    <div class="relative w-full h-full max-w-6xl max-h-[90vh] flex items-center justify-center p-4 md:p-12 pointer-events-none z-[10000]">
+      @for (key of [imageAnimationKey()]; track key) {
+         <img 
+           [src]="currentImage" 
+           class="max-w-full max-h-full object-contain rounded-lg shadow-2xl pointer-events-auto fade-in-scale" 
+           (click)="$event.stopPropagation()"
+           [alt]="title"
+         />
+      }
+    </div>
+
+  </div>
+}

@@ -1,39 +1,33 @@
 <div class="container mx-auto px-4">
-  <div class="flex justify-between items-center mb-8">
-    <h2 class="text-3xl font-bold text-realty-blue-900">
-      Available Properties
-    </h2>
+  <!-- Header + Filter -->
+  <div class="page-header">
+    <h2 class="page-title">Available Properties</h2>
+    <app-property-filter
+      [properties]="allProperties()"
+      (filtered)="onFiltered($event)"
+    />
   </div>
 
-  <div class="properties-container">
+  <!-- Properties Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-full">
     @if (isLoading()) {
-      <!-- Skeletons -->
       @for (item of skeletonArray; track $index) {
         <app-card [isLoading]="true" [property]="null!"/>
       }
     } @else {
-      <!-- Real Data -->
-      @for (prop of properties(); track prop.id) {
+      @for (prop of displayedProperties(); track prop.id) {
         <app-card [property]="prop" [isFavorite]="checkPropertyFav(prop.id+'')" [isLoading]="false" (favoriteToggle)="onToggleFavorite($event)"/>
       }
 
-      @if (properties().length === 0) {
-        <div class="col-span-full py-8 text-center text-realty-gray-500">
-          <svg
-            class="w-16 h-16 mx-auto mb-4 text-realty-gray-300"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-            />
-          </svg>
-          <p class="text-xl font-medium">No properties found</p>
-          <p class="mt-2 text-sm">Be the first to add a property!</p>
+      @if (displayedProperties().length === 0) {
+        <div class="col-span-full py-12 text-center">
+          <div class="empty-state">
+            <svg class="w-20 h-20 mx-auto mb-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <p class="text-xl font-semibold text-gray-600 mb-2">No properties match your filters</p>
+            <p class="text-sm text-gray-400">Try adjusting your search criteria</p>
+          </div>
         </div>
       }
     }

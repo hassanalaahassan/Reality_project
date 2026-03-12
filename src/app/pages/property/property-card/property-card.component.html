@@ -124,7 +124,7 @@
     <div class="card-content">
       <!-- Price -->
       <div class="price-section animate-slide-up">
-        <h3 class="price-text text-realty-blue-800">
+        <h3 class="price-text text-realty-blue-800 font-heading">
           {{ "EGP " + (property.price | number: "1.0-0") }}
         </h3>
         @if (getPricePerSquareMeter()) {
@@ -137,7 +137,7 @@
       <!-- Title & Location -->
       <div class="title-section">
         <h4
-          class="property-title group-hover:text-realty-terracotta-500 transition-colors duration-300"
+          class="property-title group-hover:text-realty-terracotta-500 transition-colors duration-300 font-heading"
         >
           {{ property.title }}
         </h4>
@@ -299,7 +299,7 @@
       <div class="actions-section">
         <button
           (click)="onContactRequest($event)"
-          class="contact-btn animate-btn-pulse bg-realty-terracotta-500 hover:bg-realty-terracotta-600 focus:ring-realty-terracotta-300"
+          class="contact-btn btn btn-primary w-full"
         >
           <svg
             class="w-5 h-5 mr-2"
@@ -319,7 +319,7 @@
 
         <button
           [routerLink]="['/property-details', property.id]"
-          class="details-btn border-realty-blue-800 text-realty-blue-800 group-hover:bg-realty-blue-600 group-hover:border-realty-blue-600 group-hover:text-white"
+          class="details-btn btn btn-outline w-full"
         >
           View Details
           <svg
