@@ -3,10 +3,11 @@ import {
   FullUserData,
   LoginForm,
   ProfileInsert,
+  ProfileUpdate,
   RegisterForm,
 } from '../Models/auth';
 import { SubabaseService } from '../core/subabase.service';
-import { catchError, map, Observable, switchMap, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import {
   AuthResponse,
   AuthTokenResponsePassword,
@@ -136,6 +137,50 @@ export class AuthService {
         this._user.set(null);
         this._token.set(null);
         this.clearToken();
+      }),
+    );
+  }
+
+  // ═══════════════════════════════════════════════════
+  //  PROFILE UPDATE
+  // ═══════════════════════════════════════════════════
+
+  updateProfile(data: ProfileUpdate): Observable<void> {
+    const userId = this._user()?.auth?.id;
+    if (!userId) return throwError(() => new Error('User not authenticated'));
+
+    return this.supabase.updateUserProfile(userId, data).pipe(
+      map((res: any) => {
+        if (res?.error) throw res.error;
+        return res.data;
+      }),
+      tap((updatedProfile: any) => {
+        // Patch the local user signal so UI updates instantly
+        const current = this._user();
+        if (current) {
+          this._user.set({
+            ...current,
+            profile: { ...current.profile, ...updatedProfile },
+          });
+        }
+      }),
+      map(() => void 0),
+    );
+  }
+
+  updateAvatar(file: File): Observable<string> {
+    const userId = this._user()?.auth?.id;
+    if (!userId) return throwError(() => new Error('User not authenticated'));
+
+    const fileName = `${userId}/${Date.now()}_${file.name}`;
+
+    return this.supabase.uploadFile('profileImage', fileName, file).pipe(
+      map((uploadRes) => {
+        if (uploadRes.error) throw uploadRes.error;
+        return this.supabase.getFileUrl('profileImage', fileName).data.publicUrl;
+      }),
+      switchMap((newUrl: string) => {
+        return this.updateProfile({ image_url: newUrl }).pipe(map(() => newUrl));
       }),
     );
   }

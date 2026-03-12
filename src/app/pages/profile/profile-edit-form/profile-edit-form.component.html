@@ -1,0 +1,46 @@
+<div class="edit-form">
+  <h3 class="form-title">Edit Profile</h3>
+
+  <div class="form-group">
+    <label class="form-label" for="editName">Full Name</label>
+    <input
+      id="editName"
+      type="text"
+      class="form-input"
+      [value]="editName()"
+      (input)="editName.set($any($event.target).value)"
+      placeholder="Enter your full name"
+    />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="editPhone">Phone Number</label>
+    <input
+      id="editPhone"
+      type="tel"
+      class="form-input"
+      [value]="editPhone()"
+      (input)="editPhone.set($any($event.target).value)"
+      placeholder="Enter your phone number"
+    />
+  </div>
+
+  <div class="form-actions">
+    <button
+      type="button"
+      class="btn-cancel"
+      (click)="onCancel()"
+      [disabled]="isSaving"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn-save"
+      (click)="onSave()"
+      [disabled]="isSaving"
+    >
+      {{ isSaving ? 'Saving...' : 'Save Changes' }}
+    </button>
+  </div>
+</div>

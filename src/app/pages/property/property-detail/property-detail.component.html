@@ -107,8 +107,23 @@
           [features]="property()?.features || []"
           [ownerName]="property()?.ownerName || ''"
           [ownerPhone]="property()?.ownerPhone || ''"
+          [userId]="property()?.user_id || 'no'"
+          [id]="property()?.id+'' || ''"
+          (deleteClick)="openDeleteModal()"
         ></app-property-info>
       </div>
     </div>
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <app-confirmation-modal
+    [isOpen]="isDeleteModalOpen()"
+    title="Delete Property"
+    message="Are you sure you want to delete this property? This action cannot be undone."
+    confirmText="Delete"
+    cancelText="Keep Property"
+    confirmColorClass="bg-red-600 hover:bg-red-700 text-white"
+    (confirm)="deleteProperty()"
+    (cancel)="closeDeleteModal()"
+  ></app-confirmation-modal>
 }

@@ -67,14 +67,14 @@ export class SubabaseService {
 
   update<T, U>(table: string, id: string, data: T): Observable<U> {
     return from(
-      supabase.from(table).update(data).eq('id', id),
+      supabase.from(table).update(data).eq('id', id).select(),
     ) as unknown as Observable<U>;
   }
 
-  delete(table: string, id: string): Observable<void> {
+  delete(table: string, id: string): Observable<any> {
     return from(
-      supabase.from(table).delete().eq('id', id),
-    ) as unknown as Observable<void>;
+      supabase.from(table).delete().eq('id', id).select(),
+    ) as unknown as Observable<any>;
   }
   rpc(fnName: string, params?: any):Observable<any> {
     return from(supabase.rpc(fnName, params)) as unknown as Observable<any>;

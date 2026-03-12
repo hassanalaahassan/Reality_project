@@ -10,6 +10,6 @@ export const authGuard = () => {
   if (authService.isLoggedIn()) {
     return true;
   } else {
-    return router.parseUrl('/login');
+    return router.parseUrl('/home');
   }
 };

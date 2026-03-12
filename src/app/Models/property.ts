@@ -7,6 +7,7 @@ export interface Property {
   longitude?: number | null;
   area: string;
   status: string;
+  type?: string;
   isVip: boolean | null;
   isNegotiable: boolean | null;
   image_urls: string[] | null;
@@ -17,6 +18,7 @@ export interface Property {
   bathroom?: number | null;
   features?: string[];
   description?: string;
+  user_id?: string;
 }
 export interface PropertyForm {
   title: string;

@@ -1,0 +1,17 @@
+<section class="features">
+  <div class="container">
+    <span class="section-badge">✨ Why Reality?</span>
+    <h2 class="section-title">Everything You Need in One Place</h2>
+    <p class="section-subtitle">We make finding your perfect property simple, fast, and reliable.</p>
+
+    <div class="features-grid">
+      <div *ngFor="let f of features; let i = index"
+           class="feature-card"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="feature-icon">{{ f.icon }}</div>
+        <h3 class="feature-title">{{ f.title }}</h3>
+        <p class="feature-desc">{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>

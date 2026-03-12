@@ -1,7 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { SubabaseService } from '../core/subabase.service';
 import { Property, PropertyForm } from '../Models/property';
-import { Observable, forkJoin, map, from, switchMap, tap } from 'rxjs';
+import { Observable, forkJoin, map, from, switchMap, tap, of } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -22,8 +22,8 @@ export class PropertiesService {
   favoriteIds = signal<Set<string>>(new Set());
 
   addPropertyToMap(property: Property) {
-    this.propertiesMap.update((map) => {
-      const newMap = new Map(map);
+    this.propertiesMap.update((currentMap) => {
+      const newMap = new Map(currentMap);
       newMap.set(property.id + '', property);
       return newMap;
     });
@@ -39,8 +39,9 @@ export class PropertiesService {
     });
   }
   setPropertiesToMap(properties: Property[]) {
-    const map = new Map(properties.map((p) => [p.id + '', p]));
-    this.propertiesMap.set(map);
+    this.propertiesMap.update(() => {
+      return new Map(properties.map((p) => [p.id + '', p]));
+    });
   }
   // Upload multiple images to 'properties' bucket
   uploadPropertyImages(files: File[]): Observable<string[]> {
@@ -94,9 +95,55 @@ export class PropertiesService {
       );
   }
 
+  // Delete a single image from Supabase storage by its public URL
+  deletePropertyImage(publicUrl: string): Observable<any> {
+    const marker = '/properties_image/';
+    const idx = publicUrl.indexOf(marker);
+    if (idx === -1) {
+      return of(null);
+    }
+    const storagePath = publicUrl.substring(idx + marker.length);
+    return this.supabase.deleteFile('properties_image', storagePath);
+  }
+
+  updateProperty(id: string, property: Partial<PropertyForm>) {
+    const { id: _id, created_at: _ca, ...payload } = property as any;
+    return this.supabase.update('properties', id, payload).pipe(
+      map((res: any) => {
+        if (res?.error) throw res.error;
+        if (!res.data || res.data.length === 0) {
+          throw new Error('Update failed: No matching property or permission denied by Supabase.');
+        }
+        const updated = res.data[0];
+        return updated as Property;
+      }),
+      // After successful update, refetch ALL properties to sync the map
+      switchMap((updatedProp: Property) => {
+        return this.getProperties().pipe(map(() => updatedProp));
+      })
+    );
+  }
+
+  deleteProperty(id: string) {
+    return this.supabase.delete('properties', id).pipe(
+      map((res: any) => {
+        if (res?.error) throw res.error;
+        if (!res.data || res.data.length === 0) {
+          throw new Error('Delete failed: No matching property or permission denied by Supabase.');
+        }
+        return res;
+      }),
+      // After successful delete, refetch ALL properties to sync the map
+      switchMap(() => {
+        this.removePropertyFromMap(id);
+        return this.getProperties();
+      })
+    );
+  }
+
   toggleFavProperty(propertyId: string) {
     return this.supabase
       .rpc('toggle_favorite', { p_property: propertyId })
-      .pipe(tap(() => this.getFavProperties().subscribe()));
+      .pipe(switchMap(() => this.getFavProperties()));
   }
 }

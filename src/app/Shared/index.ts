@@ -5,3 +5,4 @@ export { ImageGalleryComponent } from './components/image-gallery/image-gallery.
 export { PropertyInfoComponent } from './components/property-info/property-info.component';
 export { PropertyMapBoxComponent } from './components/property-map-box/property-map-box.component';
 export { PropertyFilterComponent } from './components/property-filter/property-filter.component';
+export { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';

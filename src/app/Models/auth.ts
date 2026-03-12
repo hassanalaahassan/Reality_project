@@ -25,6 +25,13 @@ export interface ProfileInsert {
   isAgent: boolean;
   image_url: string;
 }
+
+/** Shape used when updating a profile */
+export interface ProfileUpdate {
+  fullName?: string;
+  phone?: string;
+  image_url?: string;
+}
 export interface LoginForm {
   email: string;
   password: string;

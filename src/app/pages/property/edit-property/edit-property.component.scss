@@ -1,0 +1,163 @@
+/* ─── Slide-down animation for dynamic inputs ─── */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 60px;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.25s ease-out forwards;
+}
+
+/* ─── Card ─── */
+.add-property-container .card {
+  background: var(--realty-cream-50);
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Title ─── */
+.add-property-container h3 {
+  color: var(--realty-blue-700);
+  letter-spacing: 0.5px;
+}
+
+/* ─── Inputs ─── */
+.form-control,
+.form-select,
+select {
+  border-radius: 8px;
+  border: 1px solid var(--realty-gray-200);
+  padding: 10px 12px;
+  transition: all 0.25s ease;
+  background: #fff;
+}
+
+/* ─── Focus ─── */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--realty-terracotta-500);
+  box-shadow: 0 0 0 2px rgba(196, 92, 75, 0.2);
+}
+
+/* ─── Input group ─── */
+.input-group-text {
+  background: var(--realty-cream-100);
+  border: 1px solid var(--realty-gray-200);
+  color: var(--realty-blue-800);
+}
+
+/* ─── Labels ─── */
+.form-label {
+  color: var(--realty-blue-800);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ─── Checkbox ─── */
+.form-check-input:checked {
+  background-color: var(--realty-terracotta-500);
+  accent-color: var(--realty-terracotta-500);
+  border-radius: 4px;
+  color: var(--realty-terracotta-500);
+  outline: 0;
+  border: 1px solid var(--realty-terracotta-500);
+}
+
+.form-check-input:focus {
+  outline: none;
+}
+
+/* ─── Button ─── */
+.btn-primary {
+  background: var(--realty-blue-500);
+  border: none;
+  transition: all 0.3s;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--realty-terracotta-500);
+  transform: translateY(-1px);
+}
+
+/* ─── File input ─── */
+input[type="file"] {
+  padding: 8px;
+}
+
+/* ─── Alert ─── */
+.alert-success {
+  background: var(--realty-sage-50);
+  color: var(--realty-sage-800);
+  border: none;
+}
+
+.alert-danger {
+  background: var(--realty-terracotta-50);
+  color: var(--realty-terracotta-900);
+  border: none;
+}
+
+/* ─── Sub title ─── */
+h5 {
+  color: var(--realty-blue-600);
+}
+
+/* ─── Option ─── */
+option {
+  background: var(--realty-cream-200);
+  color: var(--realty-blue-900);
+}
+
+/* ─── File Upload ─── */
+.file-upload {
+  position: relative;
+  border: 2px dashed var(--realty-gray-300);
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  background-color: var(--realty-cream-50);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.file-upload:hover {
+  background-color: var(--realty-cream-200);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: var(--realty-blue-400);
+  margin-bottom: 10px;
+}
+
+.file-upload p {
+  margin: 0;
+  font-size: 16px;
+  color: var(--realty-gray-500);
+}
+
+.file-upload.dragover {
+  background-color: var(--realty-blue-400);
+  color: white;
+}

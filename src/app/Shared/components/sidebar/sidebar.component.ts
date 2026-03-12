@@ -37,6 +37,7 @@ export class SidebarComponent {
 
   menuItems = computed(() => {
     const items: MenuItem[] = [
+      { id: 'home', label: 'Home', route: '/user-home', icon: '🏠' },
       {
         id: 'properties',
         label: 'Properties',
@@ -51,6 +52,7 @@ export class SidebarComponent {
         icon: '⭐',
         badge: 'NEW',
       },
+      { id: 'profile', label: 'My Profile', route: '/profile', icon: '👤' },
       { id: 'contact', label: 'Contact Us', route: '/contact', icon: '📞' },
       { id: 'about', label: 'About Us', route: '/about', icon: 'ℹ️' },
     ];

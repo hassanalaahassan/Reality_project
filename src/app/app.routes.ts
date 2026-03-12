@@ -5,12 +5,25 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { authGuard } from './Guards/authGuard.guard';
 
 export const routes: Routes = [
+  // Public Home - no auth required, no layout wrapper
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./pages/home/home.component').then((c) => c.HomeComponent),
+  },
   {
     path: '',
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'properties', pathMatch: 'full' },
+      { path: '', redirectTo: 'user-home', pathMatch: 'full' },
+      {
+        path: 'user-home',
+        loadComponent: () =>
+          import('./pages/home/home.component').then(
+            (c) => c.HomeComponent,
+          ),
+      },
       {
         path: 'properties',
         loadComponent: () =>
@@ -45,6 +58,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/about-us/about/about.component').then(
             (c) => c.AboutComponent,
+          ),
+      },
+      {
+        path: 'Edit-property/:id',
+        loadComponent: () =>
+          import('./pages/property/edit-property/edit-property.component').then(
+            (c) => c.EditPropertyComponent,
+          ),
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./pages/profile/profile.component').then(
+            (c) => c.ProfileComponent,
           ),
       },
       {

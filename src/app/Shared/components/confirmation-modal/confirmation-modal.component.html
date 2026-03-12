@@ -1,0 +1,26 @@
+@if (isOpen) {
+  <div class="modal-overlay" (click)="onCancel()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="text-center">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">{{ title }}</h3>
+        <p class="text-gray-600 mb-8 whitespace-pre-wrap">{{ message }}</p>
+        
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button 
+            type="button"
+            (click)="onCancel()"
+            class="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+            {{ cancelText }}
+          </button>
+          <button 
+            type="button"
+            (click)="onConfirm()"
+            [ngClass]="confirmColorClass"
+            class="px-6 py-2.5 rounded-lg font-medium transition-colors">
+            {{ confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

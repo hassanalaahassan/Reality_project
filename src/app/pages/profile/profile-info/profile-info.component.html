@@ -1,0 +1,41 @@
+<div class="info-grid">
+  <div class="info-card">
+    <div class="info-icon">👤</div>
+    <div class="info-content">
+      <span class="info-label">Full Name</span>
+      <span class="info-value">{{ fullName || '—' }}</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-icon">📧</div>
+    <div class="info-content">
+      <span class="info-label">Email</span>
+      <span class="info-value">{{ email || '—' }}</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-icon">📱</div>
+    <div class="info-content">
+      <span class="info-label">Phone</span>
+      <span class="info-value">{{ phone || '—' }}</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-icon">🏢</div>
+    <div class="info-content">
+      <span class="info-label">Account Type</span>
+      <span class="info-value">{{ isAgent ? 'Agent' : 'User' }}</span>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-icon">📅</div>
+    <div class="info-content">
+      <span class="info-label">Member Since</span>
+      <span class="info-value">{{ memberSince || '—' }}</span>
+    </div>
+  </div>
+</div>

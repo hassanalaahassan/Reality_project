@@ -117,9 +117,10 @@
       </button>
     </div>
 
-    <!-- User Profile -->
-    <div
-      class="flex items-center gap-3 px-4 py-2 border-t border-realty-gray-100 mt-1 pt-2"
+    <!-- User Profile (clickable → navigates to /profile) -->
+    <a
+      routerLink="/profile"
+      class="flex items-center gap-3 px-4 py-2 border-t border-realty-gray-100 mt-1 pt-2 cursor-pointer hover:bg-realty-blue-50 rounded-lg transition-all duration-300"
     >
       <img
         [src]="
@@ -146,6 +147,6 @@
           {{ user()?.auth?.email }}
         </p>
       </div>
-    </div>
+    </a>
   </div>
 </aside>

@@ -1,13 +1,15 @@
 import { Component, computed, inject, OnInit, signal, HostListener, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { Property } from '../../../Models/property';
 import { PropertiesService } from '../../../Services/properties.service';
 import {
   ImageGalleryComponent,
   PropertyInfoComponent,
   PropertyMapBoxComponent,
+  ConfirmationModalComponent
 } from '../../../Shared';
+import { ToastService } from '../../../Services/toast.service';
 
 @Component({
   selector: 'app-property-detail',
@@ -18,6 +20,7 @@ import {
     ImageGalleryComponent,
     PropertyInfoComponent,
     PropertyMapBoxComponent,
+    ConfirmationModalComponent
   ],
   templateUrl: './property-detail.component.html',
   styleUrl: './property-detail.component.scss',
@@ -26,10 +29,13 @@ export class PropertyDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private propertiesService = inject(PropertiesService);
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
+  private toast = inject(ToastService);
 
   property = signal<Property | undefined>(undefined);
   isLoading = signal<boolean>(true);
   notFound = signal<boolean>(false);
+  isDeleteModalOpen = signal<boolean>(false);
 
   mapHeight = signal<string>('220px');
 
@@ -68,6 +74,32 @@ export class PropertyDetailComponent implements OnInit {
     const prop = this.property();
     if (!prop) return;
     this.propertiesService.toggleFavProperty(this.property()?.id + '').subscribe();
+  }
+
+  openDeleteModal() {
+    this.isDeleteModalOpen.set(true);
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModalOpen.set(false);
+  }
+
+  deleteProperty() {
+    const id = this.property()?.id;
+    if (!id) return;
+    
+    this.propertiesService.deleteProperty(id + '').subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.toast.success('Property deleted successfully!');
+        this.router.navigate(['/properties']);
+      },
+      error: (err) => {
+        this.closeDeleteModal();
+        this.toast.error('Failed to delete property.');
+        console.error(err);
+      }
+    });
   }
 
   getStatusLabel(status: string | undefined): string | undefined {

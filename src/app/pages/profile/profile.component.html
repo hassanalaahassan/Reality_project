@@ -1,0 +1,47 @@
+<div class="profile-page">
+  <div class="profile-container">
+    <!-- Header -->
+    <app-profile-header
+      [fullName]="user()?.profile?.fullName || ''"
+      [email]="user()?.auth?.email || ''"
+      [imageUrl]="user()?.profile?.image_url || ''"
+      [isAgent]="user()?.profile?.isAgent || false"
+      [isUploading]="isUploadingAvatar()"
+      (avatarChange)="onAvatarChange($event)"
+    ></app-profile-header>
+
+    <!-- Section Title + Edit Toggle -->
+    <div class="section-header">
+      <h2 class="section-title">Account Information</h2>
+      <button class="edit-toggle" (click)="toggleEdit()">
+        @if (isEditing()) {
+          ✕ Cancel
+        } @else {
+          ✏️ Edit Profile
+        }
+      </button>
+    </div>
+
+    <!-- Info Cards (read-only) -->
+    @if (!isEditing()) {
+      <app-profile-info
+        [fullName]="user()?.profile?.fullName || ''"
+        [email]="user()?.auth?.email || ''"
+        [phone]="user()?.profile?.phone || ''"
+        [isAgent]="user()?.profile?.isAgent || false"
+        [memberSince]="memberSince"
+      ></app-profile-info>
+    }
+
+    <!-- Edit Form -->
+    @if (isEditing()) {
+      <app-profile-edit-form
+        [fullName]="user()?.profile?.fullName || ''"
+        [phone]="user()?.profile?.phone || ''"
+        [isSaving]="isSaving()"
+        (save)="onSave($event)"
+        (cancel)="onCancelEdit()"
+      ></app-profile-edit-form>
+    }
+  </div>
+</div>
